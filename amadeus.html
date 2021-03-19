@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta http-equiv="Content-Security-Policy" content="default-src * data: gap: https://ssl.gstatic.com; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
+    <link rel="stylesheet" href="components/loader.css">
+    <script src="components/loader.js"></script>
+	  <title>AMADEUS</title>
+	  <link rel="icon" href="./bot.png" />
+    <link rel="stylesheet" href="css/style.css">
+    <script>
+        //
+        // TODO: Write JavaScript code here
+        //
+    </script>
+</head>
+<body>
+	<div id="container" class="container">
+		<div id="chat" class="chat">
+			<div id="messages" class="messages"></div>
+			<input id="input" type="text" placeholder="여기에 입력..." autocomplete="off" autofocus="true" /><br>
+			<input type="button" value="보내기" id="send">
+		</div>
+		<img src="./bot.png" alt="Robot cartoon" height="500vh">
+	</div>
+</body>
+<script type="text/javascript" src="/lib/onsenui/js/index.js" ></script>
+<script type="text/javascript" src="/lib/onsenui/js/constants.js" ></script>
+<script type="text/javascript" src="/lib/onsenui/js/speech.js" ></script>
+<script
+  src="https://code.jquery.com/jquery-3.6.0.min.js"
+  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+  crossorigin="anonymous"></script>
+
+<script type="text/javascript">
+
+	$(function() {
+
+		$.getJSON("https://api.ipify.org?format=jsonp&callback=?",
+
+			function(json) {
+
+				ip = json.ip;
+
+			}
+
+		);
+
+	});
+
+</script>
+</html>

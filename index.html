@@ -1,0 +1,68 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta http-equiv="Content-Security-Policy" content="default-src * data: gap: https://ssl.gstatic.com; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
+  <script src="components/loader.js"></script>
+  <script src="lib/onsenui/js/onsenui.min.js"></script>
+
+  <link rel="stylesheet" href="components/loader.css">
+  <link rel="stylesheet" href="lib/onsenui/css/onsenui.css">
+  <link rel="stylesheet" href="lib/onsenui/css/onsen-css-components.css">
+  <link rel="stylesheet" href="css/style.css">
+  <meta charset="utf-8">
+  <title>AMADEUS LOG IN</title>
+  <script>
+    ons.ready(function() {
+      console.log("Onsen UI is ready!");
+    });
+
+    if (ons.platform.isIPhoneX()) {
+      document.documentElement.setAttribute('onsflag-iphonex-portrait', '');
+      document.documentElement.setAttribute('onsflag-iphonex-landscape', '');
+    }
+  </script>
+</head>
+<body>
+    <center><br><br><br>
+      AMADEUS LOGIN
+    <br><br><br>
+
+    <small>ID : </small><input type="text" placeholder="아이디 입력" id="userid" onkeyup="enterkey()" class="input-text full-width"><br>
+    <small>PASSWORD : </small><input type="password" placeholder="비밀번호 입력" id="userpw" onkeyup="enterkey()" class="input-text full-width"><br>
+    <input type="button" value="로그인" id="signinButton"><br>
+    <p> </p><br><br><br><small>더 좋은 품질의 챗봇을 제공하기 위해 대화 내용을 수집합니다.<br>개인정보 등 민감한 정보는 입력하지 마시길 바랍니다.</small>
+</center>
+</body>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script type="text/javascript">
+    console.log("fighting!");
+    console.log(document);
+
+    var signinButton = document.getElementById("signinButton")
+    signinButton.addEventListener('click', signinFunc)
+
+    function signinFunc () {
+      var userid = document.getElementById("userid").value;
+      var userpw = document.getElementById("userpw").value;
+
+
+      if(userid == "amadeus" && userpw == "amadeus") {
+        window.location.href = './amadeus.html';
+      } else {
+        $("p").html("<font color='red'><small>로그인에 실패하였습니다.<br>아이디와 비밀번호를 다시 한 번 확인하여 주십시오.</small></font>");
+      }
+
+      
+    }
+    function enterkey() {
+        if (window.event.keyCode == 13) {
+             signinFunc();
+        }
+}
+ 
+
+
+  </script>
+</html>
