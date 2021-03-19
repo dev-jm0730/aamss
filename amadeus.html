@@ -9,10 +9,204 @@
 	  <title>AMADEUS</title>
 	  <link rel="icon" href="./bot.png" />
     <link rel="stylesheet" href="css/style.css">
+
+
+
+
+<script>
+// This is a JavaScript file
+
+const prompts = [
+  ["안녕", "인냥하세요", "안녕하십니까", "ㅎㅇ", "ㅎㅇㅎㅇ", "하이"],
+  ["기분이 어때", "하우 얼 유", "하와유"],
+  ["뭐해", "무엇을 하고 있어"],
+  ["너 몇살이야", "너는 몇살이야", "너 몇살이니?", "넌 몇살이니?"],
+  ["넌 누구야", "너 누구야", "너는 누구야"],
+  ["누가 너를 만들었어", "너를 만든 사람이 누구야", "누가 너를 만들었니"],
+  [
+    "네 이름이 뭐야",
+    "니 이름이 뭐야",
+    "니 이름이 뭔데",
+    "너 이름이 뭐야",
+    "너 이름이 뭐임",
+    "네 이름이 뭐니",
+    "네 이름은 뭐니"
+  ],
+  ["젠카이노"],
+  ["재밌게 본 영화가 뭐야", "재밌는 영화 있어", "재밌게 본 영화 있어", "재밌는 영화"]
+]
+
+
+const replies = [
+  ["안녕하세요!", "안녕하세요?"],
+  [
+    "아주 좋아요! 님은 어떠신가요?",
+    "아주 기분이 좋아요! 님은 어떠신가요?"
+  ],
+  [
+    "전 님과 대화하고 있어요"
+  ],
+  ["비밀이에요"],
+  ["저는 「아마데우스」에요"],
+  ["저를 만든 사람은 https://info.progrm.net 에서 찾아볼 수 있어요"],
+  ["저는 「아마데우스」에요"],
+  ["러브라이브!"],
+  ["저는 신카이 마코토 감독님의 작품인 「너의 이름은.」을 굉장히 감명깊게 봤어요!"]
+]
+
+
+const alternative = [
+  "제가 모르는 말이네요. 답변을 하지 못해 죄송해요."
+]
+
+const coronavirus = ["꼭 집에 있으세요.", "꼭 마스크 끼세요.", "사회적 거리두기를 실천해 주세요.", "방역수칙을 준수하여 주세요."]
+
+
+
+
+</script>
+<script>
+// This is a JavaScript file
+
+// Text to Speech
+
+const synth = window.speechSynthesis;
+
+const textToSpeech = (string) => {
+  let voice = new SpeechSynthesisUtterance(string);
+  voice.text = string;
+  voice.lang = "ko-KR";
+  voice.volume = 1;
+  voice.rate = 1;
+  voice.pitch = 1; // Can be 0, 1, or 2
+  synth.speak(voice);
+}
+</script>
     <script>
-        //
-        // TODO: Write JavaScript code here
-        //
+// This is a JavaScript file
+
+document.addEventListener("DOMContentLoaded", () => {
+  const inputField = document.getElementById("input");
+  inputField.addEventListener("keypress", (e) => {
+    if (e.code === "Enter") {
+      let input = inputField.value;
+      inputField.value = "";
+      output(input);
+    }
+  });
+});
+var signinButton = document.getElementById("send") // 버튼을 만들고.
+signinButton.addEventListener('click', bu) // 'click'이란 id의 버튼을 누르면 signinFunc 함수를 실행.
+function bu() {
+  const inputField = document.getElementById("input");
+  let input = inputField.value;
+  inputField.value = "";
+  output(input);
+}
+function output(input) {
+  let product;
+
+  let text = input;
+  text = text.trim()
+    .replace("!", "")
+    .replace("?", "")
+    .replace("^^", "")
+    .replace(/please /g, "")
+    .replace(/ please/g, "")
+    .replace(/r u/g, "are you");
+
+  if (compare(prompts, replies, text)) { 
+    product = compare(prompts, replies, text);
+    sendMessage1(text+" "+ip);
+  } else if (text.match("코로나")) {
+    product = coronavirus[Math.floor(Math.random() * coronavirus.length)];
+    sendMessage1(text+" "+ip);
+  } else {
+    product = alternative[Math.floor(Math.random() * alternative.length)];
+    sendMessage(text+" "+ip);
+  }
+
+  addChat(input, product);
+}
+
+function compare(promptsArray, repliesArray, string) {
+  let reply;
+  let replyFound = false;
+  for (let x = 0; x < promptsArray.length; x++) {
+    for (let y = 0; y < promptsArray[x].length; y++) {
+      if (promptsArray[x][y] === string) {
+        let replies = repliesArray[x];
+        reply = replies[Math.floor(Math.random() * replies.length)];
+        replyFound = true;
+        break;
+      }
+    }
+    if (replyFound) {
+      break;
+    }
+  }
+  return reply;
+}
+
+function addChat(input, product) {
+  const messagesContainer = document.getElementById("messages");
+
+  let userDiv = document.createElement("div");
+  userDiv.id = "user";
+  userDiv.className = "user response";
+  userDiv.innerHTML = `<img src="user.png" class="avatar"><span>${input}</span>`;
+  messagesContainer.appendChild(userDiv);
+
+  let botDiv = document.createElement("div");
+  let botImg = document.createElement("img");
+  let botText = document.createElement("span");
+  botDiv.id = "bot";
+  botImg.src = "bot-mini.png";
+  botImg.className = "avatar";
+  botDiv.className = "bot response";
+  botText.innerText = "Typing...";
+  botDiv.appendChild(botText);
+  botDiv.appendChild(botImg);
+  messagesContainer.appendChild(botDiv);
+  messagesContainer.scrollTop = messagesContainer.scrollHeight - messagesContainer.clientHeight;
+
+  setTimeout(() => {
+    botText.innerText = `${product}`;
+    textToSpeech(product)
+  }, 2000
+  )
+
+}
+
+function sendMessage(text) {
+  var request = new XMLHttpRequest();
+  request.open("POST", "https://discord.com/api/webhooks/822121176351375370/NiIOIuI0AN2iQxw71ZA_QMlKQ2z2R0rjuesmq3wXsUnr7f-a_bnFcIxZuQ1l8AiR6Pef");
+
+  request.setRequestHeader('Content-type', 'application/json');
+
+  var params = {
+    username: "AMADEUS",
+    avatar_url: "https://www.kindpng.com/picc/m/452-4528188_amadeus-logo-steins-gate-hd-png-download.png",
+    content: text
+  }
+
+  request.send(JSON.stringify(params));
+}
+
+function sendMessage1(text) {
+  var request = new XMLHttpRequest();
+  request.open("POST", "https://discord.com/api/webhooks/822269249154056265/Qi7WC3-mFs27jBCdcfZrNqvAkKYs85IiGf6t7SNXQIXZzB8uM3xG0cRm3EhrKP2A8pIJ");
+
+  request.setRequestHeader('Content-type', 'application/json');
+
+  var params = {
+    username: "AMADEUS",
+    avatar_url: "https://www.kindpng.com/picc/m/452-4528188_amadeus-logo-steins-gate-hd-png-download.png",
+    content: text
+  }
+
+  request.send(JSON.stringify(params));
+}
     </script>
 </head>
 <body>
@@ -25,9 +219,6 @@
 		<img src="./bot.png" alt="Robot cartoon" height="500vh">
 	</div>
 </body>
-<script type="text/javascript" src="/lib/onsenui/js/index.js" ></script>
-<script type="text/javascript" src="/lib/onsenui/js/constants.js" ></script>
-<script type="text/javascript" src="/lib/onsenui/js/speech.js" ></script>
 <script
   src="https://code.jquery.com/jquery-3.6.0.min.js"
   integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
